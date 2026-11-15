@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: for f in $(ls *.zip | sort); do unzip -o "$f"; done
+      - run: unzip -o "$(ls *.zip | sort | tail -n 1)"
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
