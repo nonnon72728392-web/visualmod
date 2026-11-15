@@ -17,11 +17,11 @@ jobs:
       - name: Unpack project
         run: |
           mkdir build-src
-          unzip -q noomidlc-2_9_0-project.zip -d build-src
+          unzip -q noomidlc-2_9_9-project.zip -d build-src
       - name: Build
         working-directory: build-src
         run: gradle build --no-daemon
       - uses: actions/upload-artifact@v4
         with:
           name: noomidlc
-          path: build-src/build/libs/noomidlc-2.9.0.jar
+          path: build-src/build/libs/noomidlc-2.9.9.jar
