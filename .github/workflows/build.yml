@@ -1,20 +1,27 @@
-name: build
-on: [workflow_dispatch, push]
+name: Build
+on:
+  push:
+  workflow_dispatch:
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: unzip -o "$(ls *.zip | sort | tail -n 1)"
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: 21
       - uses: gradle/actions/setup-gradle@v4
         with:
-          gradle-version: 8.11
-      - run: gradle build
+          gradle-version: 8.12
+      - name: Unpack project
+        run: |
+          mkdir build-src
+          unzip -q noomidlc-2_9_0-project.zip -d build-src
+      - name: Build
+        working-directory: build-src
+        run: gradle build --no-daemon
       - uses: actions/upload-artifact@v4
         with:
-          name: visualmod
-          path: build/libs/*.jar
+          name: noomidlc
+          path: build-src/build/libs/noomidlc-2.9.0.jar
